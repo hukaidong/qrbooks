@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{qrcode}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{multirow}
+
+% half of letter paper
+\geometry{
+  paperheight=5.5in,
+  paperwidth=8.5in,
+  lmargin=0.2in,
+  rmargin=0.2in,
+  heightrounded,
+}
+
+\qrset{padding}
+
+\begin{document}
+
+<% @csv.drop(1).each do |title, username, password| %>
+\begin{table}[p]
+\centering
+\begin{tabular}{|p{3cm}|p{5cm}p{4cm}p{4cm}|}
+  \hline
+  \textbf{Title} & \multicolumn{3}{c|}{\textbf{Username/Password}} \\
+  \hline
+  \multirow{2}*{<%= title %>}  & <%= qrfill username %> \\\hline
+                               & <%= qrfill password, is_password: true %> \\\hline
+\end{tabular}
+\end{table}
+
+<% end %>
+\end{document}
+
+% vim: set ft=tex foldmethod=marker foldmarker=<<<,>>> textwidth=120:
